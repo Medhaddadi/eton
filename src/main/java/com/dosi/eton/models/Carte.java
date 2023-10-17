@@ -5,10 +5,12 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 @Data
@@ -18,7 +20,7 @@ import java.util.Date;
 public class Carte {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "numero", unique = true)
     private String numero;
@@ -27,17 +29,9 @@ public class Carte {
 
     @OneToOne
     @JoinColumn(name = "utilisateurAudi_id")
-    private UtilisateurAudi utilisateurAudi;
+    private Client client;
 
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", nullable = false)
-    private Date createdAt;
 
-    @Column(name = "created_by", nullable = false)
-    @CreatedBy
-    private String createdBy;
-
-    private Date deleted_at;
+     
 
 }

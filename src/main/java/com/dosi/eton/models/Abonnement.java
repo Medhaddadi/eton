@@ -4,19 +4,21 @@ package com.dosi.eton.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 @Data
 @Entity
-@Table(name = "adminstarteur")
 public class Abonnement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @NotNull(message = "Veuillez spécifier la date de début de l'abonnement")
     private Date dateDebut;
@@ -41,17 +43,7 @@ public class Abonnement {
 
     @OneToMany
     @JoinColumn(name = "abonnement_id")
-    private Set<UtilisateurAudi> utilisateurAudis;
+    private Set<Client> clients;
 
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", nullable = false)
-    private Date createdAt;
-
-    @Column(name = "created_by", nullable = false)
-    @CreatedBy
-    private String createdBy;
-
-    private Date deleted_at;
 
 }

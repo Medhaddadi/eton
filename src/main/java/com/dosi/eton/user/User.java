@@ -2,6 +2,10 @@ package com.dosi.eton.user;
 
 import com.dosi.eton.token.Token;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,13 +34,32 @@ public class User implements UserDetails {
   private String firstname;
   private String lastname;
   private String email;
+  @Column(name = "telephone")
+  @Pattern(regexp = "(^$|[0-9]{10})", message = "Veuillez saisir un numero de telephone valide")
+  @Size(min = 2, max = 30, message = "Veuillez saisir un nom valide")
+  private String telephone;
   private String password;
+  @NotEmpty(message = "Veuillez saisir votre  adresse")
+  @NotNull(message = "Veuillez saisir votre  adresse")
+  @Size(min = 2, max = 70, message = "Veuillez saisir un nom valide")
+  private String adresse;
+
 
   @Enumerated(EnumType.STRING)
   private Role role;
 
   @OneToMany(mappedBy = "user")
   private List<Token> tokens;
+
+  public User(String firstname, String lastname, String email, String adresse, String telephone, String encode, Role role) {
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.email = email;
+    this.adresse = adresse;
+    this.telephone = telephone;
+    this.password = encode;
+    this.role = role;
+  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

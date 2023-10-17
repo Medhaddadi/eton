@@ -4,7 +4,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -12,7 +16,7 @@ import java.util.Date;
 public class OffreTarifaire {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @NotNull(message = "Veuillez spécifier le nom de l'offre tarifaire")
     private String nom;
@@ -30,18 +34,5 @@ public class OffreTarifaire {
     private Double fraisBlocage;
 
 
-    // created by an admin
-    @ManyToOne
-    @JoinColumn(name = "admin_id")
-    private Admin admin;
-
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", nullable = false)
-    private Date createdAt;
-
-    @Column(name = "created_by", nullable = false)
-    @CreatedBy
-    private String createdBy;
-    private Date deleted_at;
+     
 }

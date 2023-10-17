@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,10 +12,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Voiture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String modele;
     private String annee;
     private String kilometrage;
@@ -25,5 +27,10 @@ public class Voiture {
     private String imatriculation;
 
 
-
+    public Voiture(String modele, String annee, String kilometrage, String immatriculation) {
+        this.modele = modele;
+        this.annee = annee;
+        this.kilometrage = kilometrage;
+        this.imatriculation = immatriculation;
+    }
 }
