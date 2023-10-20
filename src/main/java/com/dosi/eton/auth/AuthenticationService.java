@@ -7,6 +7,7 @@ import com.dosi.eton.models.STATUS;
 import com.dosi.eton.models.Voiture;
 import com.dosi.eton.repository.ClientRepository;
 import com.dosi.eton.repository.VoitureRepository;
+import com.dosi.eton.services.VoitureService;
 import com.dosi.eton.token.Token;
 import com.dosi.eton.token.TokenRepository;
 import com.dosi.eton.token.TokenType;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
 @RequiredArgsConstructor
@@ -35,8 +37,8 @@ public class AuthenticationService {
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
   private final ClientRepository clientRepository;
-  private final VoitureRepository voitureRepository;
-
+  private final VoitureService voitureService;
+ Logger logger = Logger.getLogger(AuthenticationService.class.getName());
   public AuthenticationResponse register(RegisterRequest request) throws Exception {
 
     Optional<User> existingUser = repository.findByEmail(request.getEmail());
@@ -63,6 +65,7 @@ public class AuthenticationService {
     saveUserToken(savedUser, jwtToken);
     return AuthenticationResponse.builder()
             .accessToken(jwtToken)
+            .message("User registered successfully")
             .refreshToken(refreshToken)
             .build();
   }
@@ -104,6 +107,7 @@ public class AuthenticationService {
     return AuthenticationResponse.builder()
             .accessToken(jwtToken)
             .refreshToken(refreshToken)
+            .message("User authenticated successfully")
             .build();
   }
 
@@ -164,17 +168,10 @@ public class AuthenticationService {
     if (existingUser.isPresent()) {
       throw new Exception("L'utilisateur avec l'email " + request.getEmail() + " existe déjà");
     }
-    boolean existingCar = voitureRepository.existsByImatriculation(request.getImmatriculation());
-    if (existingCar) {
-      throw new Exception("La voiture avec l'immatriculation " + request.getImmatriculation() + " existe déjà");
-    }
+    logger.info("Enregistrement de la voiture");
+    var car = voitureService.save(new Voiture(request.getModele(), request.getAnnee(), request.getKilometrage(), request.getVin()));
 
-    var car = new Voiture(request.getModele(), request.getAnnee(), request.getKilometrage(), request.getImmatriculation());
-    try {
-      voitureRepository.save(car);
-    } catch (Exception e) {
-      throw new Exception("Erreur lors de l'enregistrement de la voiture", e);
-    }
+    logger.info("Enregistrement du client");
     var user = new Client(request.getFirstname(), request.getLastname(), request.getEmail(), request.getAdresse(), request.getTelephone(), passwordEncoder.encode(request.getPassword()), Role.USER);
     user.setVoiture(car);
     Client savedUser;
@@ -189,6 +186,30 @@ public class AuthenticationService {
     return AuthenticationResponse.builder()
             .accessToken(jwtToken)
             .refreshToken(refreshToken)
+            .message("Client enregistré avec succès")
             .build();
+  }
+
+  public AuthenticationResponse isAuthenticated(HttpServletRequest request, HttpServletResponse response) {
+    final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+    final String accessToken;
+    final String userEmail;
+    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+      return null;
+    }
+    accessToken = authHeader.substring(7);
+    userEmail = jwtService.extractUsername(accessToken);
+    if (userEmail != null) {
+      var user = this.repository.findByEmail(userEmail)
+              .orElseThrow();
+      if (jwtService.isTokenValid(accessToken, user)) {
+        var authResponse = AuthenticationResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(accessToken)
+                .build();
+        return authResponse;
+      }
+    }
+    return null;
   }
 }

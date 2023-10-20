@@ -28,10 +28,23 @@ public class Carte {
     private String type;
 
     @OneToOne
-    @JoinColumn(name = "utilisateurAudi_id")
+    @JoinColumn(name = "client_id")
     private Client client;
 
+    public Carte(String numCarte, String dateExpiration, String visa, Client client) {
+        this.numero = numCarte;
+        this.dateExpiration = dateExpiration;
+        this.type = visa;
+        this.client = client;
+    }
 
-     
-
+    @Override
+    public String toString() {
+        return "Carte{" +
+                "id=" + id +
+                ", numero='" + numero + '\'' +
+                ", dateExpiration='" + dateExpiration + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }

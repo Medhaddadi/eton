@@ -27,6 +27,20 @@ import java.util.List;
         })
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User implements UserDetails {
+  @Override
+  public String toString() {
+    return "User{" +
+            "id=" + id +
+            ", firstname='" + firstname + '\'' +
+            ", lastname='" + lastname + '\'' +
+            ", email='" + email + '\'' +
+            ", telephone='" + telephone + '\'' +
+            ", password='" + password + '\'' +
+            ", adresse='" + adresse + '\'' +
+            ", role=" + role +
+            ", tokens=" + tokens +
+            '}';
+  }
 
   @Id
   @GeneratedValue

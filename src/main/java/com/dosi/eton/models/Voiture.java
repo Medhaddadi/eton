@@ -3,16 +3,11 @@ package com.dosi.eton.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Data
+@RequiredArgsConstructor
 public class Voiture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,16 +16,28 @@ public class Voiture {
     private String annee;
     private String kilometrage;
 
-    @NotEmpty(message = "Veuillez saisir votre immatriculation")
-    @NotNull(message = "Veuillez saisir votre immatriculation")
-    @Column(name = "immatriculation", unique = true)
-    private String imatriculation;
+    // numéro de châssis de voiture". Le numéro de châssis (ou numéro de VIN - Vehicle Identification Number) est un code unique utilisé par l'industrie automobile pour identifier chaque véhicule produit.
+    @NotEmpty(message = "Veuillez saisir votre VIN")
+    @NotNull(message = "Veuillez saisir votre VIN")
+    @Column(name = "VIN", unique = true)
+    private String vin ;
 
 
-    public Voiture(String modele, String annee, String kilometrage, String immatriculation) {
+    public Voiture(String modele, String annee, String kilometrage, String VIN) {
         this.modele = modele;
         this.annee = annee;
         this.kilometrage = kilometrage;
-        this.imatriculation = immatriculation;
+        this.vin = VIN;
+    }
+
+    @Override
+    public String toString() {
+        return "Voiture{" +
+                "id=" + id +
+                ", modele='" + modele + '\'' +
+                ", annee='" + annee + '\'' +
+                ", kilometrage='" + kilometrage + '\'' +
+                ", vin='" + vin + '\'' +
+                '}';
     }
 }

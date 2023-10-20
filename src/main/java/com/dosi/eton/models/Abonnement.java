@@ -1,19 +1,19 @@
 package com.dosi.eton.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
+import lombok.*;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Abonnement {
 
     @Id
@@ -27,23 +27,46 @@ public class Abonnement {
     private Date dateFin;
 
     @NotNull(message = "Veuillez spécifier l'état de l'abonnement")
-    private Boolean etat = false;
+    private String etat ;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "offre_id")
-    private OffreTarifaire offre ;
+    @JsonBackReference
+    private OffreTarifaire offre;
 
-    @OneToMany
-    @JoinColumn(name = "abonnement_id")
-    private Set<Facturation> facturations;
+    @OneToMany(mappedBy = "abonnement", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Facturation> facturations;
 
-    @OneToMany
-    @JoinColumn(name = "abonnement_id")
-    private Set<DemandeProlongement> demandesProlongement;
+    @OneToMany(mappedBy = "abonnement", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<DemandeProlongement> demandesProlongement;
 
-    @OneToMany
-    @JoinColumn(name = "abonnement_id")
-    private Set<Client> clients;
+    @OneToOne(mappedBy = "abonnement")
+    @JsonManagedReference
+    private Client client;
 
 
+
+    public Abonnement(Date date, Date date1, String enCours) {
+        this.dateDebut = date;
+        this.dateFin = date1;
+        this.etat = enCours;
+        this.facturations=new ArrayList<>();
+        this.demandesProlongement=new ArrayList<>();
+    }
+
+    @Override
+    public String toString() {
+        return "Abonnement{" +
+                "id=" + id +
+                ", dateDebut=" + dateDebut +
+                ", dateFin=" + dateFin +
+                ", etat='" + etat + '\'' +
+                ", offre=" + offre +
+                ", facturations=" + facturations +
+                ", demandesProlongement=" + demandesProlongement +
+                ", client=" + client +
+                '}';
+    }
 }

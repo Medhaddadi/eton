@@ -39,6 +39,6 @@ public class ClientRegistrationRequest {
 
     private String kilometrage;
 
-    @NotEmpty(message = "Immatriculation cannot be empty")
-    private String immatriculation;
+   @NotEmpty(message = "vin cannot be empty")
+    private String vin;
 }

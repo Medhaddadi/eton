@@ -23,13 +23,8 @@ import java.time.LocalDateTime;
 @Table(name = "adminstarteur")
 @PrimaryKeyJoinColumn(name = "id")
 public class Admin extends User {
-
     @NotEmpty(message = "Veuillez saisir votre poste")
     @NotNull(message = "Veuillez saisir votre poste")
     @Size(min = 2, max = 30, message = "Veuillez saisir un nom valide")
     private String poste;
-
-
-     
-
 }

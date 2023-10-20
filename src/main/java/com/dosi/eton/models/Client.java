@@ -2,6 +2,7 @@ package com.dosi.eton.models;
 
 import com.dosi.eton.user.Role;
 import com.dosi.eton.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -11,7 +12,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -21,27 +22,24 @@ import java.util.Set;
 @NoArgsConstructor
 public class Client extends User {
 
-    @OneToMany
-    @JoinColumn(name = "utilisateur_id")
-    private Set<Facturation> facturations;
-
-    @OneToMany
-    @JoinColumn(name = "utilisateur_id")
-    private Set<DemandeProlongement> demandesProlongement;
-
-
-    @OneToMany
-    @JoinColumn(name = "utilisateur_id")
-    private Set<Abonnement> abonnements;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "voiture_id", referencedColumnName = "id")
     private Voiture voiture;
 
-     
+
+    @OneToOne
+    @JoinColumn(name = "abonnement_id")
+    @JsonBackReference
+    private Abonnement abonnement;
 
     public Client(String firstname, String lastname, String email, String adresse, String telephone, String encode, Role role) {
         super(firstname, lastname, email, adresse, telephone, encode, role);
+    }
 
+    @Override
+    public String toString() {
+        return "Client{" +
+                "voiture=" + voiture +
+                '}';
     }
 }

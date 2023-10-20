@@ -1,5 +1,6 @@
 package com.dosi.eton.auth;
 
+import com.dosi.eton.ExeceptionHandler.MessageResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -46,7 +47,11 @@ public class AuthenticationController {
   }
 
   @PostMapping("/authenticate")
-  public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest request) {
+  public ResponseEntity<?> authenticate(@Valid @RequestBody AuthenticationRequest request, BindingResult result) {
+    if (result.hasErrors()) {
+      List<String> errors = result.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList();
+      return ResponseEntity.badRequest().body(new MessageResponse(500, errors.toString()));
+    }
     try {
       AuthenticationResponse response = service.authenticate(request);
       return ResponseEntity.ok(response);
@@ -56,6 +61,16 @@ public class AuthenticationController {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is disabled.");
     } catch (LockedException e) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User account is locked.");
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during authentication: " + e.getMessage());
+    }
+  }
+
+  @PostMapping("/is-authenticated")
+  public ResponseEntity<?> isAuthenticated(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    try {
+      AuthenticationResponse response1 = service.isAuthenticated(request, response);
+      return ResponseEntity.ok(response1);
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during authentication: " + e.getMessage());
     }

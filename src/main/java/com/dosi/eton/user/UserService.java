@@ -1,5 +1,6 @@
 package com.dosi.eton.user;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,6 +10,7 @@ import java.security.Principal;
 
 @Service
 @RequiredArgsConstructor
+@Data
 public class UserService {
 
     private final PasswordEncoder passwordEncoder;
