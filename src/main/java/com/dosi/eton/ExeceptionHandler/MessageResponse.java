@@ -13,7 +13,7 @@ public class MessageResponse {
     @JsonProperty("timestamp")
     private long timestamp;
     @JsonProperty("liste resultats")
-    private String listeResultats;
+    private Object listeResultats;
 
 
     public MessageResponse(int statusCode, String message) {
@@ -24,6 +24,6 @@ public class MessageResponse {
     public MessageResponse(int statusCode, String message, Object listeResultats) {
         this.statusCode = statusCode;
         this.message = message;
-        this.listeResultats = listeResultats.toString();
+        this.listeResultats = listeResultats;
     }
 }

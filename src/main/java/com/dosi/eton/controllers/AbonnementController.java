@@ -40,16 +40,20 @@ public class AbonnementController {
         Client client = clientService.getClientById(idClient);
         try {
             abonnementService.souscrire(idOffre, idClient);
-            String contract = "Bonjour " + client.getLastname() + " " + client.getFirstname() + " \n" +
-                    "Vous avez souscrit à l'abonnement " + client.getAbonnement().getOffre().getNom() + " le " + client.getAbonnement().getDateDebut() + " pour une durée de " + client.getAbonnement().getOffre().getDureeContrat() + " mois. \n" +
-                    "dans l'offre " + client.getAbonnement().getOffre().getNom() + " vous avez " + client.getAbonnement().getOffre().getPartenaireChargeurHautePuissance() + "heures de chargeur haute puissance . \n Le montant de l'abonnement est de " + client.getAbonnement().getOffre().getFraisMensuels() + "€. pour chaque mois. \n" +
-                    "Vous pouvez consulter votre facture sur votre espace client. \n" +
-                    "Cordialement, \n" +
-                    "L'équipe Eton";
+            String contract = genererContract(client);
             return ResponseEntity.ok().body(new MessageResponse(200, "Abonnement souscrit avec succès" , contract));
         } catch (Exception e) {
             return ResponseEntity.status(500).body(new MessageResponse(500, "Erreur lors de la souscription à l'abonnement :" + e.getMessage()));
         }
+    }
+
+    public String genererContract(Client client){
+        return  "Bonjour " + client.getLastname() + " " + client.getFirstname() + " \n" +
+                "Vous avez souscrit à l'abonnement " + client.getAbonnement().getOffre().getNom() + " le " + client.getAbonnement().getDateDebut() + " pour une durée de " + client.getAbonnement().getOffre().getDureeContrat() + " mois. \n" +
+                "dans l'offre " + client.getAbonnement().getOffre().getNom() + " vous avez " + client.getAbonnement().getOffre().getPartenaireChargeurHautePuissance() + "heures de chargeur haute puissance . \n Le montant de l'abonnement est de " + client.getAbonnement().getOffre().getFraisMensuels() + "€. pour chaque mois. \n" +
+                "Vous pouvez consulter votre facture sur votre espace client. \n" +
+                "Cordialement, \n" +
+                "L'équipe Eton";
     }
 
     @PreAuthorize("hasRole('ADMIN')")

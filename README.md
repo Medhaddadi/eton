@@ -12,7 +12,14 @@
 
 
 ## Fonctionnalités
+### diagramme de cas sequence simplifié
 ![diagramDeSequence.png](diagramDeSequence.png)
+
+### diagramme de cas sequence détaillé
+![diagramSequence.png](diagramSequence.png)
+
+### diagramme de cas sequence détaillé avec erreur  
+![digramSequenceGestionERROR.png](digramSequenceGestionERROR.png)
 ### Scénario client
 - Créer un compte
 - Se connecter
@@ -30,8 +37,9 @@
 - Se connecter
 - Voir toutes les offres
 - Voir les voitures
-- Voir les vim
+- Voir les vims
 - Créer un vim
+- voir les abonnements
 - Supprimer un abonnement
 - Créer une offre
 
@@ -77,4 +85,36 @@ VALUES ('1HGCM82633A123456', 'Exemple de VIN 1'),
     - definition : Java Faker est une bibliothèque Java qui permet de générer des données aléatoires.
   - Lombok
     - definition : Lombok est une bibliothèque Java qui permet de réduire le code source en générant automatiquement les getters et les setters.
+  - Log4j
+    - definition : Log4j est une bibliothèque Java qui permet de gérer les logs.
 - MySQL
+## spring boot Rest API 
+### Qu'est-ce que Spring Boot ?
+Spring Boot est un framework qui permet de créer des applications Java de manière rapide et simple. Il est basé sur Spring et permet de créer des applications autonomes, c'est-à-dire des applications qui ne nécessitent pas de serveur d'application.
+
+![spring-boot-architecture2.png](spring-boot-architecture2.png)
+Ce schéma illustre l'architecture typique d'une application Spring Boot :
+
+1.  Client  : Il représente l'utilisateur final ou un autre service qui interagit avec l'application Spring Boot. Le client envoie des requêtes HTTPS à l'application.
+
+2.  Controller  : Il s'agit du point d'entrée de l'application Spring Boot pour les requêtes HTTP entrantes. Il traite la requête du client, interagit avec la couche de service (si nécessaire) et renvoie une réponse.
+
+3.  Service Layer  : Cette couche gère la logique métier de l'application. Elle peut impliquer des calculs, des validations, et des interactions avec la couche modèle ou d'autres services. L'injection de dépendance, un concept clé de Spring, permet d'injecter cette couche de service dans le contrôleur.
+
+4.  Model  : Il représente la structure des données avec lesquelles l'application interagit. Ces modèles pourraient être de simples POJOs ou des entités plus complexes interagissant avec une base de données.
+
+5.  Repository Class Extending CRUD Services  : Dans l'écosystème Spring Data JPA, la couche de répertoire offre des opérations CRUD sans avoir besoin de code supplémentaire. Cela minimise la nécessité d'écrire des requêtes SQL personnalisées.
+
+6.  Database  : C'est là que les données de l'application sont stockées et gérées. Le modèle interagit avec la base de données, souvent via des outils ORM comme JPA.
+
+7.  Dependency Injection  : C'est un concept clé de Spring qui promeut l'injection de dépendances dans les composants. Cela conduit à une meilleure modularité et découplage dans les applications.
+
+8.  JPA/Spring Data  : JPA est une spécification pour l'accès aux données. Spring Data l'améliore en fournissant des fonctionnalités supplémentaires.
+
+En bref, cette architecture favorise une séparation des préoccupations, où chaque couche a sa propre responsabilité, rendant le système modulaire et facile à maintenir.
+## JwT
+
+### Qu'est-ce que JWT ?
+JSON Web Token (JWT) est un standard ouvert (RFC 7519) qui définit un moyen compact et autonome pour sécuriser les échanges d'informations entre plusieurs parties sous forme d'objet JSON. Cette information peut être vérifiée et validée facilement car elle est signée numériquement.
+
+![JWT Archi.png](JWT%20Archi.png)
