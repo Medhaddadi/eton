@@ -9,6 +9,9 @@
 - [Contribution](#contribution)
 - [Database Schema](#Database Schema)
 - [Technologie](#technologie)
+- [spring boot Rest API](#spring boot Rest API)
+- [JwT](#JwT)
+
 
 
 ## Fonctionnalités
@@ -20,6 +23,7 @@
 
 ### diagramme de cas sequence détaillé avec erreur  
 ![digramSequenceGestionERROR.png](digramSequenceGestionERROR.png)
+
 ### Scénario client
 - Créer un compte
 - Se connecter
