@@ -7,9 +7,9 @@
 - [Installation](#installation)
 - [Utilisation](#utilisation)
 - [Contribution](#contribution)
-- [Database Schema](#Database Schema)
+- [Database_Schema](#Database Schema)
 - [Technologie](#technologie)
-- [spring boot Rest API](#spring boot Rest API)
+- [spring_boot_Rest_API](#spring boot Rest API)
 - [JwT](#JwT)
 
 
