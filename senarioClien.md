@@ -21,13 +21,3 @@ Le client doit être inscrit et authentifié.
 9. Une fois le paiement validé, le client est redirigé vers une page de confirmation avec un récapitulatif de son abonnement.
 10. Le client reçoit également un e-mail de confirmation avec les détails de son abonnement.
 
-### Fonctionnalités supplémentaires :
-
-1. Consultation de l'abonnement et de la consommation : Le client peut consulter son tableau de bord pour voir les détails de son abonnement, sa date d'expiration, sa consommation, et le montant payé.
-2. Consulter les factures : Le client peut accéder à ses factures payées, les consulter en détail et télécharger un reçu.
-3. Gestion des cartes : Le client peut consulter, ajouter ou supprimer des cartes de paiement associées à son compte.
-4. Prolongation d'abonnement : Si l'abonnement est sur le point d'expirer ou si le client souhaite le renouveler à l'avance, il a la possibilité de le prolonger via son tableau de bord.
-5. Paiements mensuels : Le client est notifié chaque mois pour effectuer le paiement de son abonnement. Il peut le faire directement via son tableau de bord.
-
-_Note : Ce scénario est basé sur un cas réel d'utilisation du système e-tron d'Audi._
-

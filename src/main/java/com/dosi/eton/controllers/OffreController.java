@@ -53,7 +53,7 @@ public class OffreController {
 
         try {
             OffreTarifaire savedOffre = offreTarifaireService.save(offre);
-            return ResponseEntity.ok().body(new MessageResponse(200, "Offre créée avec succès"+ savedOffre));
+            return ResponseEntity.ok().body(new MessageResponse(200, "Offre créée avec succès ", savedOffre));
         } catch (Exception e) {
             logger.warning("Erreur lors de la création de l'offre" + e.getMessage());
             return new ResponseEntity<>(new MessageResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
